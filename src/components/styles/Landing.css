@@ -1,0 +1,703 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   Landing — the first screen.
+
+   ORDER MATTERS. Base rules first, then min-width steps, then the ≤768px
+   block LAST so it wins on its own specificity. The template had the
+   mobile block at the TOP of the file, which meant every later base rule
+   overrode it — which is why it needed `!important` on nearly every line.
+   Moving it to the bottom removed fifteen of them.
+
+   THE ROLE-LINE CLEARANCE BUDGET — read before changing a font-size.
+   The two role lines are `white-space: nowrap` and set very large, so
+   their width is essentially a function of font-size. Each line
+   alternates between two strings; the budget is set by the LONGER of each
+   pair. Worst case is "Applied ML Engineer" (.landing-h2-2).
+
+   They also have to fit BESIDE the 3D character, which is the harder
+   constraint. Measured off the rendered canvas at 1440x900, over 90 frames
+   so an arm mid-animation can't sneak past: across the vertical band the two
+   lines occupy, the figure's silhouette ends 232px right of the canvas
+   centre — 25.74% of the canvas height. `--figureHalf` rounds that to 26vh.
+
+   Height, not width. The canvas is `height: 100vh` and the camera's
+   field of view is vertical (PerspectiveCamera(14.5, w/h) in Scene.tsx,
+   fixed position), so the figure's on-screen size scales with viewport
+   HEIGHT and its centre is always the viewport centre. That is why a
+   percentage `left` can never keep the type clear of it: at 1280x1024 the
+   figure is 28% wider in pixels than at 1440x800, while a percentage
+   column gets narrower. The template's `left: 56%` put the type's first
+   five letters underneath the figure's head at 1440x900, which is
+   exactly how "APPLIED ML ENGINEER" shipped reading as "ED ML ENGINEER".
+
+   So `--figureHalf`, `--roleColumn` and `--roleSize` in the 1025px block
+   below derive both the start of the column and the type size from that
+   one measured ratio. Consequences worth knowing:
+
+     1025x768  -> 26px, and the line sits ~57px over the figure: the
+                  column beside it cannot hold the floor size, so the
+                  no-clip term of `left` wins. Legible, not clear.
+     1440x900  -> 32px, 29px clear of the figure, 52px off the right edge
+     1600x720  -> 43px (short viewport, small figure, wide column)
+     1920x1080 -> 47px, 30px clear, 66px off the right edge
+     2560x1440 -> 47px (the column stops growing once `.landing-section`
+                  hits its 1920px cap)
+
+   Two things invalidate the 26vh figure and mean re-measuring: moving
+   the camera or changing its fov in Scene.tsx, and changing the vertical
+   position of `.landing-info` (the silhouette is narrowest around the
+   neck at y 560-640 and widest across the desk below y 640).
+
+   If you add a longer role string in config.ts, the 11.3 coefficient in
+   `--roleSize` is what needs checking — it is glyph width per pixel of
+   font-size for the current longest string. Past roughly 12.5 the line
+   will start to clip at the narrow end of the range.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.landing-section {
+  width: 100%;
+  max-width: var(--cMaxWidth);
+  margin: auto;
+  position: relative;
+  height: var(--vh);
+}
+
+.landing-container {
+  width: var(--cWidth);
+  margin: auto;
+  height: 100%;
+  position: relative;
+  max-width: var(--cMaxWidth);
+}
+
+/* ── decorative light ─────────────────────────────────────────────── */
+
+.landing-circle1 {
+  top: 0%;
+  left: 0%;
+  z-index: 15;
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  background-color: #fb8dff;
+  box-shadow: inset -50px 40px 50px rgba(84, 0, 255, 0.6);
+  filter: blur(60px);
+  border-radius: 50%;
+  animation: loadingCircle 5s linear infinite;
+}
+
+.nav-fade {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 130px;
+  background-image: linear-gradient(0deg,
+      transparent,
+      var(--backgroundColor) 70%);
+  pointer-events: none;
+  z-index: 12;
+  opacity: 0;
+  left: 0;
+}
+
+@keyframes loadingCircle {
+  0% {
+    transform: translate(-95%, -75%) rotateZ(0deg);
+  }
+
+  100% {
+    transform: translate(-95%, -75%) rotateZ(360deg);
+  }
+}
+
+.landing-circle2 {
+  top: 50%;
+  right: 0%;
+  transform: translate(calc(100% - 2px), -50%);
+  z-index: 9;
+  position: fixed;
+  display: none;
+  width: 300px;
+  height: 300px;
+  background-color: #fb8dff;
+  box-shadow: inset -50px 40px 50px rgba(84, 0, 255, 0.6);
+  filter: blur(50px);
+  border-radius: 50%;
+  animation: loadingCircle2 5s linear infinite;
+}
+
+@keyframes loadingCircle2 {
+  100% {
+    transform: translate(calc(100% - 2px), -50%) rotate(360deg);
+  }
+}
+
+/* ── the character ────────────────────────────────────────────────── */
+
+.landing-video,
+.landing-image {
+  position: absolute;
+  bottom: 0;
+  height: 95%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.landing-image img {
+  height: 100%;
+  z-index: 2;
+  position: relative;
+}
+
+.character-rim {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  z-index: 1;
+  background-color: #f59bf8;
+  box-shadow: inset 66px 35px 85px 0px rgba(85, 0, 255, 0.65);
+  filter: blur(50px);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 100%) scale(1.4);
+  opacity: 0;
+}
+
+.character-model {
+  height: 80vh;
+  position: absolute;
+  max-width: 1920px;
+  max-height: 1080px;
+  /* Centred with `left/right: 0` and auto margins, NOT with
+     `left: 50%; transform: translateX(-50%)`.
+
+     GSAP animates `x` on this element (GsapScroll.ts tl1/tl2), and once it
+     does it owns the transform property. On first paint it is careful: it
+     writes `translate(-50%, 0%) translate(0px, 0%)`, keeping the CSS
+     centring as a prefix. But handleResize() kills every ScrollTrigger and
+     rebuilds the timelines, and on that second pass GSAP re-reads its own
+     two-translate output and writes back `translate(0%, 0%)` — the -50% is
+     gone. The character jumped half a viewport to the right and sat mostly
+     off screen until the page was reloaded. Keeping the centring in
+     properties GSAP never writes makes that unreachable. */
+  left: 0;
+  right: 0;
+  margin-inline: auto;
+  width: 100%;
+  z-index: 0;
+  bottom: 50px;
+  pointer-events: inherit;
+}
+
+.character-model::after {
+  content: "";
+  width: 100vw;
+  height: 250px;
+  background-image: linear-gradient(to bottom,
+      transparent,
+      var(--backgroundColor) 70%);
+  bottom: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9;
+  position: absolute;
+}
+
+.character-model::before {
+  content: "";
+  width: 100vw;
+  height: 700px;
+  background-color: var(--backgroundColor);
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9;
+  position: absolute;
+}
+
+.character-loaded .character-rim {
+  animation: backlight 3s forwards;
+  animation-delay: 0.3s;
+  opacity: 0;
+}
+
+.character-model canvas {
+  position: relative;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.character-hover {
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+}
+
+/* ── the name ─────────────────────────────────────────────────────── */
+
+.landing-intro {
+  position: absolute;
+  z-index: 9;
+  top: 5%;
+  left: 0;
+}
+
+.landing-intro h2 {
+  margin: 0;
+  color: var(--accentColor);
+  font-size: clamp(16px, 3.4vw, 22px);
+  font-weight: 300;
+  letter-spacing: 2px;
+}
+
+.landing-intro h1 {
+  margin: 0;
+  letter-spacing: 2px;
+  font-size: clamp(28px, 6.4vw, 34px);
+  line-height: 1.12;
+  font-weight: 500;
+  font-family: "Geist", sans-serif;
+}
+
+/* ── the role lines ───────────────────────────────────────────────── */
+
+.landing-info {
+  position: absolute;
+  right: 50%;
+  transform: translateX(50%);
+  bottom: 40px;
+  top: inherit;
+  z-index: 9;
+
+  /* Below 1025px the lines are centred in the full container width, so
+     they have room to breathe. The 1025px step tightens these. */
+  --roleSize: clamp(22px, 6.4vw, 55px);
+  --roleSubSize: clamp(19px, 5.6vw, 46px);
+}
+
+.landing-info h3 {
+  font-size: clamp(16px, 3.4vw, 22px);
+  letter-spacing: 2px;
+  font-weight: 300;
+  color: var(--accentColor);
+  margin: 0;
+}
+
+.landing-info h2 {
+  margin: 0;
+  margin-left: 20px;
+  font-family: "Geist", sans-serif;
+  font-weight: 600;
+  font-size: var(--roleSubSize);
+  /* line-height must be ≥ 1 — the template used 40px against a 75px
+     font, so consecutive lines' glyphs occupied the same pixels and the
+     two roles rendered on top of each other. */
+  line-height: 1.12;
+  position: relative;
+  display: flex;
+  flex-wrap: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  white-space: nowrap;
+}
+
+.landing-h2-info {
+  white-space: nowrap;
+}
+
+/* The alternate half of each pair starts invisible.
+
+   These two sit absolutely on top of their partner at the same origin, so
+   any moment where both are opaque shows one string printed over the other.
+   initialFX() lifts these back to 1 immediately after parking their
+   individual characters at opacity 0, so the loop controls visibility from
+   then on. The floor covers the gap between mount and that call — a tenth
+   of a second at 769–1024px, where there is no loading screen to hide it —
+   and it means a JS failure leaves one legible role line rather than two
+   superimposed ones. */
+.landing-h2-2,
+.landing-h2-info-1 {
+  opacity: 0;
+}
+
+.landing-h2-info-1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+}
+
+h2.landing-info-h2 {
+  color: #c481ff;
+  font-size: var(--roleSize);
+  line-height: 1.12;
+  /* The template set `width: 150%` here to let nowrap text escape its
+     column. It escaped the viewport instead, and stretched the ::after
+     mask to 1.5× the text it was supposed to sit over. */
+  width: auto;
+  margin: 0;
+  font-family: "Geist", sans-serif;
+  font-weight: 600;
+  position: relative;
+  margin-left: -5px;
+}
+
+.landing-h2-2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+}
+
+/* A soft fade at the very bottom of the accent line, so the white line
+   below reads as sitting in front of it. The template faded the bottom
+   40% of the glyphs into the background, which — on top of the collision
+   above — is what made the whole block unreadable. 15% is enough for the
+   depth cue while leaving every letter legible. */
+.landing-info-h2::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  background-image: linear-gradient(0deg,
+      var(--backgroundColor) 0%,
+      rgba(0, 0, 0, 0) 15%);
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+/* ── steps up ─────────────────────────────────────────────────────── */
+
+@media screen and (min-width: 500px) {
+  .landing-circle2 {
+    display: block;
+  }
+
+  .character-model {
+    z-index: 0;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  .character-model {
+    height: 80vh;
+  }
+
+  .landing-intro h2 {
+    font-size: 25px;
+  }
+
+  .landing-intro h1 {
+    font-size: 40px;
+  }
+
+  .landing-info h3 {
+    font-size: 25px;
+  }
+}
+
+/* The tablet band. The character only mounts above 1024px, so between
+   769 and 1024 the landing is typography over an empty stage — the name
+   at the top, the roles at the bottom, both centred. Without this the
+   two blocks sat at opposite ends of a tall screen with a void between
+   them. */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .landing-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 6vh;
+    text-align: center;
+  }
+
+  .landing-intro,
+  .landing-info {
+    position: relative;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    transform: none;
+  }
+
+  .landing-info h2 {
+    margin-left: 0;
+    justify-content: center;
+  }
+
+  h2.landing-info-h2 {
+    margin-left: 0;
+  }
+
+  /* Centred and absolutely positioned don't mix: the alternating halves
+     would anchor to the left edge of a centred flex line and drift out
+     of register with the half they replace. */
+  .landing-h2-info-1,
+  .landing-h2-2 {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+@media screen and (min-width: 1025px) {
+  .character-model {
+    height: 100vh;
+    bottom: 0;
+    z-index: 11;
+    position: fixed;
+  }
+
+  .character-model::after,
+  .character-model::before {
+    display: none;
+  }
+
+  .landing-intro {
+    top: 40%;
+    left: auto;
+    right: 66%;
+    transform: translate(0%, -50%);
+    /* Above the character (11). Without this the name's last letters
+       disappeared behind the figure's shoulder on tall viewports, where the
+       figure is wider in pixels than the 1440x900 case this was laid out
+       against. */
+    z-index: 12;
+  }
+
+  .landing-intro h2 {
+    font-size: clamp(20px, 1.6vw, 35px);
+  }
+
+  .landing-intro h1 {
+    font-size: clamp(32px, 2.9vw, 60px);
+  }
+
+  .landing-info {
+    bottom: auto;
+    top: 51%;
+    text-align: left;
+    transform: translate(0%, -50%);
+    right: auto;
+
+    /* Above the character. The template had `z-index: inherit` here, which
+       resolves to `auto` — below the character's 11 — so the figure was
+       painted over the role lines and ate their first four or five letters.
+       See the clearance note above. */
+    z-index: 12;
+
+    /* Start of the type, and how wide it may be: both derived from where the
+       figure actually ends. --figureHalf is half the character's rendered
+       width across the vertical band these two lines occupy. See the
+       clearance note at the top of this file for where 26vh comes from and
+       why it is a vh and not a vw. 281px is 26% of the 1080px the canvas is
+       capped at by `max-height`. */
+    --figureHalf: min(26vh, 281px);
+
+    /* The space from there to the right edge of `.landing-container`, which
+       already keeps 3% of the viewport clear.
+
+       This is deliberately in vw and not in `%`, even though `%` would be
+       exact. --roleColumn feeds --roleSize, which is used as a `font-size`,
+       and a percentage in a font-size resolves against the PARENT FONT SIZE,
+       not the containing block. Written with `%` this term silently became
+       "50% of 16px" and pinned the type to its floor at every width.
+
+       min(47vw, 902px) is half the container: 94% of the viewport, capped
+       because `.landing-section` is capped at 1920px. The /0.94 converts the
+       viewport-relative figure offset into container units, the +16px is the
+       gap to the figure, and the -11px covers what vw counts and the
+       container does not — a classic scrollbar is 15px, 14px of it inside the
+       container, plus a pixel of rounding. */
+    --roleColumn: calc(min(47vw, 902px) - (var(--figureHalf) + 16px) / 0.94 - 11px);
+
+    /* 11.3 is the measured glyph width of the longest role string per pixel
+       of font-size, and 38px is its fixed `letter-spacing: 2px` cost over 19
+       characters. Solving `width = 11.3 * size + 38px` for the column is what
+       keeps the line from clipping. 75px is the template's original size and
+       is unreachable now — the column tops out near 600px because
+       `.landing-section` is capped at 1920px — but it stays as a ceiling. */
+    --roleSize: clamp(26px, calc((var(--roleColumn) - 38px) / 11.3), 75px);
+    --roleSubSize: calc(var(--roleSize) * 0.87);
+    --lineWidth: calc(var(--roleSize) * 11.3 + 38px);
+
+    /* Clearing the figure is the first choice; not clipping is the veto.
+       Below about 1100px the column beside the figure cannot hold even the
+       26px floor, so the second term wins and the line retreats left over the
+       figure instead of running off the right edge. Overlapping type stays
+       readable — z-index above plus the halo below — whereas type with its
+       last four letters cut off does not. Above that width the two terms are
+       equal by construction, since --roleColumn is measured from the first
+       one. */
+    left: min(
+      calc(50% + (var(--figureHalf) + 16px) / 0.94),
+      calc(100% - var(--lineWidth) + 5px)
+    );
+  }
+
+  /* A soft dark halo, invisible against the background and only doing work
+     where the type crosses the figure. Cheaper and less intrusive than a
+     scrim over the character, and it means the lines stay readable at the
+     26px floor above, where they do overlap. */
+  .landing-intro h1,
+  .landing-intro h2,
+  .landing-info h2,
+  .landing-info h3 {
+    text-shadow: 0 0 14px var(--backgroundColor), 0 0 34px var(--backgroundColor);
+  }
+
+  .landing-info h3 {
+    font-size: clamp(20px, 1.6vw, 35px);
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .landing-intro {
+    right: 68%;
+  }
+}
+
+/* ── phones, last so it wins ──────────────────────────────────────── */
+
+@media only screen and (max-width: 768px) {
+  .character-model {
+    display: none;
+  }
+
+  .landing-section,
+  .landing-container {
+    height: auto;
+    min-height: var(--vh);
+    max-width: 100vw;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 72px 15px 48px;
+  }
+
+  .landing-intro {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    transform: none;
+    z-index: 10;
+    text-align: center;
+    width: 100%;
+    height: auto;
+    order: 1;
+  }
+
+  .landing-intro h1 {
+    word-spacing: 0.1em;
+    font-size: clamp(30px, 8.6vw, 44px);
+    line-height: 1.16;
+    margin: 0;
+  }
+
+  .landing-intro h1 br {
+    display: block;
+  }
+
+  .landing-info {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    transform: none;
+    text-align: center;
+    margin-top: 24px;
+    z-index: 10;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    height: auto;
+    width: 100%;
+    order: 3;
+  }
+
+  /* The article ("An") reads as a fragment once the line below it is
+     centred rather than flowing from it. */
+  .landing-info h3 {
+    display: none;
+  }
+
+  /* Static positioning is what makes the stack work on a phone, but the
+     alternating halves are absolute — forcing their parents static would
+     let them escape and land on the name. Mobile shows the first half of
+     each pair only, and initialFX() skips the crossfade loop to match.
+     Without that guard the visible half slid away on schedule and left a
+     blank line for six seconds, waiting for a partner that was hidden. */
+  .landing-info h2,
+  h2.landing-info-h2 {
+    position: static;
+    display: block;
+    width: auto;
+    margin: 0;
+    line-height: 1.3;
+    white-space: normal;
+    text-align: center;
+    height: auto;
+    transform: none;
+  }
+
+  .landing-h2-1 {
+    font-size: clamp(22px, 6.4vw, 30px);
+    color: var(--accentColor);
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  .landing-h2-info {
+    font-size: clamp(17px, 4.8vw, 22px);
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.35;
+  }
+
+  /* The depth mask has nothing to mask once the lines are stacked with
+     real spacing, and at this size it ate the first line. */
+  .landing-info-h2::after {
+    display: none;
+  }
+
+  .landing-h2-2,
+  .landing-h2-info-1 {
+    display: none;
+  }
+}
+
+/* Landscape phones: a 100svh stage with 44px of type in it leaves no
+   room for anything, so let the section grow and scroll instead. */
+@media only screen and (max-height: 500px) and (orientation: landscape) {
+  .landing-section,
+  .landing-container {
+    height: auto;
+    min-height: 0;
+    padding-top: 64px;
+    padding-bottom: 32px;
+  }
+
+  .landing-intro h1 {
+    font-size: clamp(26px, 5vw, 34px);
+  }
+
+  .landing-h2-1 {
+    font-size: clamp(20px, 3.6vw, 26px);
+  }
+
+  .landing-h2-info {
+    font-size: clamp(15px, 2.8vw, 19px);
+  }
+}

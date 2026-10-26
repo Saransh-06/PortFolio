@@ -1,0 +1,198 @@
+.contact-section {
+  margin: auto;
+  padding-bottom: 150px;
+  margin-top: 0;
+  position: relative;
+  z-index: 1;
+  background-color: var(--backgroundColor);
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.contact-section h3 {
+  font-size: 32px;
+  font-weight: 400;
+  text-transform: uppercase;
+  margin: 0;
+  margin-bottom: 30px;
+}
+.contact-flex {
+  display: flex;
+  justify-content: space-between;
+}
+.contact-flex h4 {
+  font-weight: 500;
+  margin: 0;
+  opacity: 0.6;
+  font-size: 14px;
+}
+.contact-box {
+  display: flex;
+  flex-direction: column;
+}
+.contact-flex p {
+  margin-top: 8px;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+a.contact-social {
+  font-size: 16px;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 8px;
+}
+/* Was an <h2> and an <h5> inside a section that opens at <h3>, which inverted
+   the heading order twice over — a screen reader's outline for this page had
+   the footer credit sitting above the section it lives in. They were never
+   headings in any real sense, so they are paragraphs now and these rules carry
+   the styling that the element names used to. Both are scoped under
+   .contact-flex to outrank the generic `.contact-flex p` sizing above. */
+.contact-flex .contact-built {
+  font-weight: 400;
+  font-size: 16px;
+  margin: 0;
+  line-height: 22px;
+}
+.contact-flex .contact-built > span {
+  color: var(--accentColor);
+}
+
+/* A handle with no linkable profile — styled to match the social links but
+   without the underline that implies it's clickable. */
+.contact-social-static {
+  font-size: 16px;
+  margin-bottom: 8px;
+  opacity: 0.65;
+}
+
+.contact-box {
+  max-width: 420px;
+}
+
+/* ── Portrait ───────────────────────────────────────────────────────
+   The third column. Sized in the column rather than filling it, so the
+   face reads as a person and not a banner, and given a hard aspect ratio
+   with object-fit so a portrait- or landscape-cropped file can be dropped
+   in without the layout moving. */
+.contact-portrait {
+  width: 190px;
+  height: 190px;
+  object-fit: cover;
+  object-position: center 22%;
+  border-radius: 10px;
+  margin-bottom: 26px;
+  /* The photograph is greyscale already; the ring is what ties it to the
+     page's accent without tinting the face. */
+  border: 1px solid rgba(194, 164, 255, 0.28);
+  filter: contrast(1.03);
+}
+
+a.contact-mainsite {
+  align-self: flex-start;
+  margin-bottom: 22px;
+  border-bottom-color: var(--accentColor);
+}
+
+.contact-flex .contact-copyright {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 14px;
+  /* The <h5> this replaces carried a UA margin of 1.67em; restated so the
+     credit does not collapse against the line above it. */
+  margin: 24px 0 0;
+  display: flex;
+  gap: 8px;
+  opacity: 0.5;
+}
+@media only screen and (min-width: 600px) {
+  .contact-section h3 {
+    font-size: 40px;
+  }
+  .contact-social-static {
+    font-size: 18px;
+  }
+  .contact-flex .contact-built {
+    font-size: 18px;
+  }
+  a.contact-social {
+    font-size: 18px;
+  }
+  .contact-flex h4 {
+    font-size: 15px;
+  }
+  .contact-flex p {
+    font-size: 15px;
+  }
+}
+@media only screen and (min-width: 900px) {
+  .contact-section h3 {
+    font-size: 48px;
+  }
+  .contact-social-static {
+    font-size: 20px;
+  }
+  .contact-flex .contact-built {
+    font-size: 20px;
+  }
+  a.contact-social {
+    font-size: 22px;
+  }
+}
+@media only screen and (min-width: 1300px) {
+  .contact-section h3 {
+    font-size: 55px;
+  }
+  .contact-flex .contact-built {
+    font-size: 22px;
+  }
+  a.contact-social {
+    font-size: 24px;
+  }
+}
+@media only screen and (min-width: 1600px) {
+  .contact-section h3 {
+    font-size: 60px;
+    margin-bottom: 40px;
+  }
+  .contact-flex .contact-built {
+    font-size: 23px;
+  }
+  a.contact-social {
+    font-size: 25px;
+  }
+  .contact-flex p {
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+  .contact-flex .contact-copyright {
+    font-size: 20px;
+    line-height: 20px;
+    gap: 10px;
+  }
+}
+@media only screen and (max-width: 900px) {
+  .contact-flex {
+    flex-direction: column;
+    gap: 40px;
+  }
+  /* Stacked, the portrait would sit at the very bottom under the credit
+     line. Ordered first in this column instead, and slightly smaller. */
+  .contact-portrait {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 20px;
+  }
+  .contact-flex p {
+    margin-bottom: 0px;
+  }
+  .contact-flex h4 {
+    margin-top: 20px;
+  }
+  .contact-section {
+    margin-top: 50px;
+    padding-bottom: 50px;
+  }
+  .contact-container {
+    width: calc(100% - 25px);
+  }
+}

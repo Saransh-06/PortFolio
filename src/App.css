@@ -1,0 +1,44 @@
+.section-container {
+  width: 1300px;
+}
+.title,
+.para {
+  font-kerning: normal;
+  -webkit-text-rendering: optimizeLegibility;
+  text-rendering: optimizeLegibility;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  word-spacing: 0.15em;
+}
+@media only screen and (max-width: 1600px) {
+  .section-container {
+    width: 1200px;
+    max-width: calc(100% - 160px);
+  }
+}
+@media only screen and (max-width: 1400px) {
+  .section-container {
+    width: 900px;
+  }
+}
+@media only screen and (max-width: 900px) {
+  .section-container {
+    width: 500px;
+    max-width: var(--cWidth);
+  }
+}
+
+/* Shown while a route's chunk downloads. Centred on the page background rather
+   than left as unstyled black-on-white text in the corner, which is what the
+   bare fallback div looked like on a slow connection. */
+.route-fallback {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--backgroundColor);
+  color: rgba(234, 229, 236, 0.6);
+  font-size: 0.875rem;
+  letter-spacing: 2px;
+}

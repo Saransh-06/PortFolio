@@ -1,0 +1,86 @@
+/* The 404 page. Colours are the site tokens; the only local decision is the
+   accent hairline under the code, which echoes the section rules elsewhere. */
+
+.notfound {
+  min-height: 100vh;
+  min-height: 100svh;
+  background-color: var(--backgroundColor);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  box-sizing: border-box;
+}
+
+.notfound-inner {
+  width: 100%;
+  max-width: 640px;
+}
+
+.notfound-code {
+  font-size: 14px;
+  letter-spacing: 4px;
+  font-weight: 400;
+  color: var(--accentColor);
+  margin: 0 0 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #363636;
+}
+
+.notfound-title {
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-weight: 400;
+  line-height: 1.1;
+  margin: 0 0 20px;
+  color: #eae5ec;
+}
+
+.notfound-body {
+  /* 0.72 on #0b080c is 8.4:1 — the body copy elsewhere on the site sits at
+     0.3, which does not pass AA and is being raised separately. */
+  color: rgba(234, 229, 236, 0.72);
+  font-size: 1rem;
+  line-height: 1.6;
+  font-weight: 300;
+  margin: 0 0 32px;
+  max-width: 46ch;
+}
+
+.notfound-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.notfound-link {
+  display: inline-block;
+  padding: 12px 20px;
+  border: 1px solid #363636;
+  border-radius: 2px;
+  font-size: 0.875rem;
+  letter-spacing: 0.5px;
+  color: #eae5ec;
+  text-decoration: none;
+  transition: border-color 0.25s, color 0.25s;
+}
+
+.notfound-link:hover,
+.notfound-link:focus-visible {
+  border-color: var(--accentColor);
+  color: var(--accentColor);
+}
+
+.notfound-link:focus-visible {
+  outline: 2px solid var(--accentColor);
+  outline-offset: 2px;
+}
+
+@media only screen and (max-width: 600px) {
+  .notfound-links {
+    flex-direction: column;
+  }
+
+  .notfound-link {
+    text-align: center;
+  }
+}

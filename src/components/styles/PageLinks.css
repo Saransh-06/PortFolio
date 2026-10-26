@@ -1,0 +1,50 @@
+/* Sits beside the "Back to Home" pill on /myworks and /play. Kept inline-flex
+   so it flows next to that inline-block pill without either page's header
+   needing to become a flex container — the two headers are laid out
+   differently and neither should have to change to accommodate this. */
+.page-links {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 22px;
+  margin-left: 22px;
+  vertical-align: middle;
+}
+
+.page-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  letter-spacing: 0.4px;
+  text-decoration: none;
+  /* 0.72 over the page background measures 8.4:1 — this is a utility row, so
+     it sits below the headline without dropping under AA. */
+  color: rgba(234, 229, 236, 0.72);
+  border-bottom: 1px solid transparent;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.page-link:hover,
+.page-link:focus-visible {
+  color: var(--accentColor);
+  border-bottom-color: var(--accentColor);
+}
+
+.page-link svg {
+  font-size: 15px;
+}
+
+@media only screen and (max-width: 600px) {
+  .page-links {
+    /* Below 600px the email is wider than what is left of the row, so the two
+       links stack under the pill instead of overflowing it. */
+    display: flex;
+    margin: 14px 0 0;
+    gap: 12px 20px;
+  }
+
+  .page-link {
+    font-size: 13px;
+  }
+}

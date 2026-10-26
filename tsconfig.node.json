@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2023"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    /* Scoped here rather than left implicit so browser code in src/ doesn't
+       silently pick up Node globals. */
+    "types": ["node"],
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  /* api/ is the Vercel serverless function. Vercel compiles it independently,
+     so without listing it here a type error in it would only surface as a
+     failed deploy rather than a failed `npm run build`. It belongs to this
+     project rather than the app one because it runs on Node, not in a
+     browser. */
+  "include": ["vite.config.ts", "api"]
+}

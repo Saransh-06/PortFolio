@@ -1,0 +1,171 @@
+<!doctype html>
+<!--
+  Source for public/og-image.png — the 1200x630 social card.
+
+  TO REGENERATE, with Chrome on PATH:
+
+    chrome --headless --disable-gpu --window-size=1200,630 \
+      --screenshot=public/og-image.png scripts/og-card.html
+
+  Check the result before committing: Geist arrives from the Google Fonts CDN
+  (src/index.css:1 does the same thing), so a shot taken before the font
+  resolves silently ships the sans-serif fallback. If the name looks like
+  system Arial, the font lost the race — take it again.
+
+  There is no npm script for this because it needs a browser, and the repo has
+  no offline rasteriser: satori, resvg, sharp and canvas are all absent, and
+  Geist is not vendored (no .woff2 anywhere in the tree), so none of them could
+  set the type correctly even if installed.
+
+  Every colour and string below is traceable to src/config.ts or the
+  stylesheets rather than picked to look nice:
+
+    #0b080c   --backgroundColor        src/index.css:22, theme-color meta
+    #eae5ec   body text                src/index.css:11
+    #c2a4ff   --accentColor            src/index.css:21
+    #c481ff   the big role line only   Landing.css:336  (the one place it appears)
+    #fb8dff   .landing-circle1         Landing.css:81
+    #f59bf8   .character-rim backlight Landing.css:151-164
+
+  Text is rolesPrimary[0] and rolesSecondary[0] only. The second half of each
+  pair ("Applied ML Engineer" / "Maths to monitor") exists so initialFX() can
+  cross-fade them; a PNG cannot cross-fade, and drawing both at once is the
+  superimposed-text bug Landing.css:316-322 warns about. First-of-pair is also
+  what the site itself renders at <=768px (Landing.css:675-678), so this is its
+  own canonical static state.
+
+  The character is deliberately absent: it lives in an encrypted GLB and only
+  mounts above 1024px anyway (Landing.css:570 hides it at <=768px), so the
+  site's own narrow layout is pure typography on the dark field. That is the
+  honest static form of this page.
+
+  The mark is the favicon's motif at scale — one lit point with a halo — for the
+  reason favicon.svg:2-3 already gives: initials turn to mud, a single point of
+  light survives.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@300;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1200px; height: 630px; }
+      body {
+        background: #0b080c;
+        font-family: "Geist", sans-serif;
+        color: #eae5ec;
+        overflow: hidden;
+        position: relative;
+      }
+
+      /* The two blurred blobs the landing page uses, at card scale and low
+         opacity. No hard gradient anywhere — Landing.css never has one. */
+      .haze-a, .haze-b {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(90px);
+      }
+      .haze-a {
+        width: 520px; height: 520px;
+        right: -110px; top: -170px;
+        background: #fb8dff;
+        box-shadow: inset -70px 55px 70px rgba(84, 0, 255, 0.6);
+        opacity: 0.3;
+      }
+      .haze-b {
+        width: 430px; height: 430px;
+        right: 90px; bottom: -210px;
+        background: #f59bf8;
+        box-shadow: inset 66px 35px 85px rgba(85, 0, 255, 0.65);
+        opacity: 0.16;
+      }
+
+      .plate {
+        position: relative;
+        height: 100%;
+        padding: 78px 104px 66px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* favicon.svg's dot-and-halo, enlarged */
+      .mark { position: relative; width: 26px; height: 26px; flex: none; }
+      .mark span {
+        position: absolute; border-radius: 50%; background: #c2a4ff;
+      }
+      .mark .halo {
+        inset: -13px; opacity: 0.22; filter: blur(11px);
+      }
+      .mark .dot { inset: 8px; box-shadow: 0 0 14px rgba(194, 164, 255, 0.85); }
+
+      .body { margin-top: auto; margin-bottom: auto; }
+
+      .intro {
+        font-weight: 300;
+        font-size: 25px;
+        letter-spacing: 2px;
+        color: #c2a4ff;
+        margin-bottom: 12px;
+      }
+      .name {
+        font-weight: 500;
+        font-size: 92px;
+        letter-spacing: 2px;
+        line-height: 1.12;
+        margin-bottom: 30px;
+      }
+      .roles { display: flex; flex-direction: column; gap: 6px; }
+      .role-1 {
+        font-weight: 600;
+        font-size: 43px;
+        letter-spacing: 2px;
+        color: #c481ff;
+      }
+      .role-2 {
+        font-weight: 600;
+        font-size: 37px;
+        letter-spacing: 2px;
+        color: #eae5ec;
+      }
+
+      .foot {
+        flex: none;
+        display: flex;
+        align-items: center;
+        gap: 22px;
+        font-weight: 300;
+        font-size: 21px;
+        letter-spacing: 1px;
+        color: rgba(234, 229, 236, 0.62);
+      }
+      .foot .rule {
+        flex: 1;
+        height: 1px;
+        background: rgba(194, 164, 255, 0.35);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="haze-a"></div>
+    <div class="haze-b"></div>
+    <div class="plate">
+      <div class="mark"><span class="halo"></span><span class="dot"></span></div>
+      <div class="body">
+        <div class="intro">Hello! I&#39;m</div>
+        <div class="name">HARSHIT<br />SINGH</div>
+        <div class="roles">
+          <div class="role-1">SOFTWARE DEVELOPER</div>
+          <div class="role-2">BACKEND &amp; MOBILE</div>
+        </div>
+      </div>
+      <div class="foot">
+        <span>Bengaluru, India</span>
+        <span class="rule"></span>
+        <span>github.com/harshittDEV</span>
+      </div>
+    </div>
+  </body>
+</html>

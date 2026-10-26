@@ -1,0 +1,411 @@
+/* ══════════════════════════════════════════════════════════════════
+   Certifications — three programme cards, each expandable.
+
+   Deliberately quieter than Career: that section is the spine of the page
+   and gets a 70px gradient heading and a lit timeline. This one is a
+   reference table people scan, so the cards carry the weight and the
+   heading matches Career's scale without competing for attention.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* The 220px top padding is not arbitrary. `setAllTimeline` scrubs
+   `.career-section` from y:0 to y:20% of its own height, so the career block
+   slides ~500px DOWN into whatever follows it — which is why the template gives
+   it `margin-bottom: 250px` and gave Work's heading another `margin-top: 100px`.
+   At 120px the last career row came within 26px of this heading at 1280x720.
+   The push only exists above 1024px, where GsapScroll animates y:0 to y:0
+   instead, so the narrower breakpoints below keep their smaller padding. */
+.certs-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: auto;
+  margin: auto;
+  padding: 220px 0 160px;
+}
+
+.certs-container {
+  width: var(--cWidth);
+  max-width: 1250px;
+  margin: 0 auto;
+}
+
+.certs-section h2 {
+  font-size: 70px;
+  line-height: 70px;
+  font-weight: 400;
+  text-align: center;
+  background: linear-gradient(0deg, #7f40ff, #ffffff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  margin: 0 0 28px;
+}
+
+.certs-section h2 > span {
+  font-family: "Geist", sans-serif;
+  font-weight: 300;
+}
+
+.certs-lede {
+  max-width: 620px;
+  margin: 0 auto 70px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* ── the three programme cards ─────────────────────────────────── */
+
+.certs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.certs-card {
+  display: flex;
+  flex-direction: column;
+  padding: 30px 28px;
+  box-sizing: border-box;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 16px;
+  background: linear-gradient(
+    165deg,
+    rgba(255, 255, 255, 0.045) 0%,
+    rgba(255, 255, 255, 0.012) 60%
+  );
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.certs-card:hover {
+  border-color: rgba(194, 164, 255, 0.32);
+  transform: translateY(-3px);
+}
+
+.certs-card-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.certs-issuer {
+  font-size: 12px;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--accentColor);
+}
+
+.certs-year {
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 0.6px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.certs-card h3 {
+  margin: 0 0 14px;
+  font-size: 21px;
+  line-height: 1.32;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+}
+
+.certs-covers {
+  align-self: flex-start;
+  font-size: 10px;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 20px;
+  padding: 4px 11px;
+  white-space: nowrap;
+}
+
+.certs-note {
+  margin: 16px 0 0;
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.58);
+}
+
+/* The credential ID is the thing a reader actually retypes into an issuer's
+   verification form, so it gets a monospace face and is selectable — the
+   global `user-select: none` in index.css would otherwise make it
+   uncopyable, which defeats the point of printing it. */
+.certs-id {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin: 20px 0 0;
+}
+
+.certs-id > span {
+  font-size: 9.5px;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.48);
+}
+
+.certs-id code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  color: rgba(255, 255, 255, 0.72);
+  word-break: break-all;
+  user-select: text;
+  -webkit-user-select: text;
+  cursor: text;
+}
+
+.certs-verify {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 6px;
+  margin-top: 24px;
+  font-size: 12.5px;
+  letter-spacing: 0.4px;
+  color: var(--accentColor);
+  border-bottom: 1px solid rgba(194, 164, 255, 0.35);
+  padding-bottom: 2px;
+  transition: border-color 0.25s ease;
+}
+
+.certs-verify:hover {
+  border-color: var(--accentColor);
+}
+
+/* ── the expandable course list ────────────────────────────────── */
+
+.certs-courses {
+  margin-top: 26px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 16px;
+}
+
+.certs-courses summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  cursor: pointer;
+  list-style: none;
+  color: rgba(255, 255, 255, 0.5);
+  transition: color 0.25s ease;
+}
+
+/* Safari draws its own disclosure triangle through ::-webkit-details-marker
+   and ignores `list-style: none`. */
+.certs-courses summary::-webkit-details-marker {
+  display: none;
+}
+
+.certs-courses summary:hover {
+  color: var(--accentColor);
+}
+
+.certs-courses-label {
+  font-size: 11px;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+}
+
+.certs-chevron {
+  width: 7px;
+  height: 7px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg) translateY(-2px);
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.certs-courses[open] .certs-chevron {
+  transform: rotate(225deg) translateY(-2px);
+}
+
+.certs-courses ul {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.certs-courses li a {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  font-size: 12.5px;
+  font-weight: 300;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.55);
+  transition: color 0.25s ease;
+}
+
+.certs-courses li a svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+  opacity: 0.55;
+}
+
+.certs-courses li a:hover {
+  color: var(--accentColor);
+}
+
+/* ── the standalone courses ────────────────────────────────────── */
+
+.certs-standalone {
+  margin-top: 56px;
+  padding-top: 34px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.certs-standalone h4 {
+  margin: 0 0 22px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.certs-standalone ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.certs-standalone li a {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+
+.certs-standalone li a:hover {
+  border-color: rgba(194, 164, 255, 0.3);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.certs-standalone-title {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.certs-standalone-issuer {
+  font-size: 11.5px;
+  font-weight: 300;
+  letter-spacing: 0.3px;
+  color: rgba(255, 255, 255, 0.52);
+}
+
+.certs-standalone li a svg {
+  opacity: 0.45;
+  flex-shrink: 0;
+}
+
+/* ── narrower ──────────────────────────────────────────────────── */
+
+@media only screen and (max-width: 1400px) {
+  .certs-section h2 {
+    font-size: 50px;
+    line-height: 50px;
+  }
+
+  .certs-card {
+    padding: 26px 24px;
+  }
+
+  .certs-card h3 {
+    font-size: 19px;
+  }
+}
+
+/* Two columns leaves a lone card on the second row, so the grid goes to one
+   column and the cards stay full-width and readable instead. */
+@media only screen and (max-width: 1024px) {
+  .certs-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .certs-section {
+    padding: 90px 0 110px;
+  }
+
+  .certs-lede {
+    margin-bottom: 50px;
+  }
+
+  .certs-section h2 {
+    font-size: 48px;
+    line-height: 48px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .certs-section {
+    padding: 70px 0 90px;
+  }
+
+  .certs-container {
+    width: calc(100% - 30px);
+    box-sizing: border-box;
+  }
+
+  .certs-section h2 {
+    font-size: 40px;
+    line-height: 42px;
+  }
+
+  .certs-lede {
+    font-size: 14px;
+    margin-bottom: 40px;
+  }
+
+  .certs-card {
+    padding: 24px 20px;
+  }
+
+  .certs-card h3 {
+    font-size: 18px;
+  }
+
+  /* Stacked, because a title and an issuer side by side in a 320px pill
+     wraps into an unreadable two-line stack with a chevron floating in it. */
+  .certs-standalone ul {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .certs-standalone li a {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .certs-standalone li a svg {
+    display: none;
+  }
+}

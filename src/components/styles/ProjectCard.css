@@ -1,0 +1,47 @@
+/* Generated project cards — see ProjectCard.tsx.
+   Sized to match what the template does to <img> in the same slots, so
+   a real screenshot can replace a card without any layout shift. */
+
+.project-card {
+  display: block;
+  border-radius: 14px;
+}
+
+/* Horizontal work scroller. Mirrors `.work-image img { max-height: 350px }`
+   via max-width, because the card is a fixed 4:3 viewBox. */
+.project-card-work {
+  width: 100%;
+  max-width: 440px;
+  height: auto;
+}
+
+/* /myworks grid. The slot is a fixed 220px band with overflow hidden, so
+   the SVG fills it and crops (preserveAspectRatio="slice"). */
+.project-card-grid {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.3s ease;
+}
+
+.myworks-card:hover .project-card-grid {
+  transform: scale(1.04);
+}
+
+@media only screen and (max-height: 900px) {
+  /* 333 x 250 keeps the 4:3 ratio inside the template's 250px cap. */
+  .project-card-work {
+    max-width: 333px;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .project-card-work {
+    max-width: 380px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .project-card-work {
+    max-width: 100%;
+  }
+}
