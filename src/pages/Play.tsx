@@ -436,7 +436,7 @@ const Play = () => {
           board and the chat panel are self-evident, so the h1 is for assistive
           tech only. */}
       <h1 className="sr-only">
-        Play chess against Stockfish, and ask an AI assistant about Harshit
+        Play chess against Stockfish, and ask an AI assistant about Saransh
         Singh&apos;s work
       </h1>
       {/* Header */}
@@ -482,7 +482,7 @@ const Play = () => {
           </div>
           <div className="chat-input-area">
             <label className="sr-only" htmlFor="chat-input">
-              Ask a question about Harshit&apos;s work
+              Ask a question about Saransh&apos;s work
             </label>
             <input
               id="chat-input"

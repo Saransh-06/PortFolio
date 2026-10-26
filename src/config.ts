@@ -89,34 +89,37 @@ export interface Certification {
 
 export const config = {
   developer: {
-    name: "Harshit",
-    fullName: "Harshit Singh",
-    initials: "HS",
-    title: "Software Developer | Backend Engineering & Mobile Applications",
+    name: "Saransh",
+    fullName: "Saransh Singh",
+    initials: "SS",
+    title: "Computer Science Student & Developer",
     /** Shown in the loading marquee. */
-    disciplines: ["Backend Engineering", "Mobile Applications", "Database Systems"],
+    disciplines: [
+      "Software Engineering",
+      "Full-Stack Development",
+      "Data Structures & Algorithms",
+    ],
     /** The landing cycles each pair. Keep every line SHORT — they are set
      *  at up to 75px with `white-space: nowrap` and will overflow. */
     article: "A",
-    rolesPrimary: ["Software Developer", "Backend Developer"],
-    rolesSecondary: ["Backend & Mobile", "Reliable Systems"],
+    rolesPrimary: ["Software Developer", "Full-Stack Developer"],
+    rolesSecondary: ["Problem Solver", "AI/ML Enthusiast"],
     /** Doubles as the meta description, so it has to make the claim inside ~180 characters. */
     description:
-      "I build software that solves practical problems, combining mobile and frontend development with database design, API development, and secure application architecture.",
-    resumeUrl: "/HarshitSingh_CV.pdf",
+      "Computer Science student at DSCE, Bengaluru, building software solutions with a focus on Data Structures, full-stack development, and practical applications.",
+    resumeUrl: "/Saransh_Singh_Resume.pdf",
     /** Portrait shown at the close of the page, in the Contact section.
-     *  If the file is missing the Contact section renders without it rather than
-     *  showing a broken image. */
-    photo: "/images/harshit.png",
-    photoAlt: "Harshit Singh",
+     *  If the file is missing or empty the Contact section renders without it. */
+    photo: "",
+    photoAlt: "Saransh Singh",
   },
 
   social: {
-    github: "harshittDEV",
-    email: "harshitsinghh1128@gmail.com",
+    github: "Saransh-06",
+    email: "ssa.260506@gmail.com",
     location: "Bengaluru, India",
-    timezone: "IST, UTC+5:30",
-    mainSite: "https://github.com/harshittDEV",
+    timezone: "Asia/Kolkata",
+    mainSite: "https://github.com/Saransh-06",
   },
 
   /* ───────────────────────────  ABOUT  ─────────────────────────── */
@@ -125,12 +128,10 @@ export const config = {
     title: "About Me",
     /** Set in large type. */
     description:
-      "I’m a software developer focused on building practical applications and understanding the engineering behind them. My work spans mobile application development, interactive user interfaces, database-driven systems, and backend development. I enjoy taking ideas from concept to implementation, exploring different architectural approaches, and solving problems that require more than just writing code. Through personal projects, collaborative development, and open-source contributions, I’m continuously strengthening my understanding of software engineering, application security, and reliable system design. I’m particularly interested in backend engineering, mobile applications, and building products that are useful, maintainable, and thoughtfully designed.",
+      "I am a Computer Science undergraduate at Dayananda Sagar College of Engineering (DSCE), Bengaluru, developing my skills in programming, Data Structures and Algorithms, and full-stack development. I enjoy building practical software projects, collaborating with teams, and exploring the intersection of software engineering and AI/ML.",
     facts: [
-      { value: "6", label: "projects in mobile, backend and database systems" },
-      { value: "2", label: "certifications — HackerRank SQL and Java (Basic)" },
-      { value: "3", label: "hackathon and competitive programming recognitions" },
-      { value: "1", label: "open-source pull request to Metabase" },
+      { value: "200+", label: "LeetCode problems solved" },
+      { value: "3rd", label: "place in college-level CSE hackathon" },
     ],
   },
 
@@ -138,92 +139,53 @@ export const config = {
 
   experiences: [
     {
-      position: "Co-founder and Lead",
-      company: "Versoid",
-      period: "Jul 2026 – Nov 2026",
-      year: "2026",
+      position: "CTO",
+      company: "Verseoid",
+      period: "Startup Project",
+      year: "Startup",
       location: "Bengaluru, India",
       kind: "work",
       description:
-        "Leading product planning and cross-functional team coordination, guiding practical applications from concept to architecture.",
+        "Served as CTO in a five-person startup team working on a platform intended to unify tracking of developers' coding progress across multiple platforms.",
       responsibilities: [
-        "Managing product planning and feature roadmaps across development stages.",
-        "Coordinating development efforts to ensure cohesive execution and focus on practical utility.",
+        "Collaborated within a five-person startup team on technical direction and architecture.",
+        "Researched concepts and architectural workflows for unified developer progress tracking.",
       ],
-      technologies: ["Product Planning", "Team Coordination", "System Design"],
+      technologies: ["System Design", "Technical Direction", "Full-Stack"],
     },
     {
-      position: "Hackathon Finalist & Competitor",
-      company: "Hackathons & Competitions",
-      period: "2026",
-      year: "2026",
+      position: "Hackathon Competitor",
+      company: "College-Level CSE Hackathon",
+      period: "College",
+      year: "3rd Place",
       location: "Bengaluru, India",
       kind: "programme",
       description:
-        "Competitive technical development, problem solving, and product prototyping in structured hackathons.",
+        "Competed in a college-level CSE hackathon, collaborating on software problem solving, rapid prototyping, and presentation.",
       responsibilities: [
-        "Hacktoberfest event at Startup Park (October 2026) — reached the finals.",
-        "HackerRank Orchestrate (October 2026) — reached the finals.",
-        "Zero to One (June 2026) — awarded third place.",
+        "Secured third place in the competition.",
       ],
       technologies: ["Problem Solving", "Rapid Prototyping", "Teamwork"],
     },
     {
-      position: "Open-Source Contributor",
-      company: "Metabase",
-      period: "2026",
-      year: "2026",
-      location: "Remote",
-      kind: "work",
-      description:
-        "Contributed to the open-source business intelligence platform Metabase.",
-      responsibilities: [
-        "Authored pull request #84991 to resolve SQL autocomplete behavior when text follows the cursor.",
-      ],
-      technologies: ["TypeScript", "SQL", "Git", "Open Source"],
-      link: {
-        label: "Pull request #84991",
-        url: "https://github.com/metabase/metabase/pull/84991",
-      },
-    },
-    {
-      position: "B.E. in Computer Science and Engineering",
-      company: "Dayananda Sagar College of Engineering",
+      position: "Bachelor of Technology in Computer Science",
+      company: "Dayananda Sagar College of Engineering (DSCE)",
       period: "Expected 2029",
       year: "2029",
       location: "Bengaluru, India",
       kind: "education",
       description:
-        "Undergraduate degree focusing on core computer science foundations, algorithms, data structures, and software engineering.",
+        "Undergraduate studies focusing on Computer Science foundations, Data Structures and Algorithms, Object-Oriented Programming, and software development.",
       responsibilities: [
-        "Foundational coursework in Data Structures and Algorithms, Object-Oriented Programming, and Database Design.",
+        "Foundational coursework in Data Structures and Algorithms, Object-Oriented Programming, and Computer Science fundamentals.",
       ],
-      technologies: ["Data Structures", "Algorithms", "Database Design", "Java"],
+      technologies: ["Data Structures", "Algorithms", "Java", "C++"],
     },
   ] as Experience[],
 
   /* ───────────────────────  CERTIFICATIONS  ─────────────────────── */
 
-  certifications: [
-    {
-      title: "SQL (Basic)",
-      issuer: "HackerRank",
-      year: "2026",
-      url: "https://www.hackerrank.com/skills-verification",
-      tier: "major",
-      covers: "Relational Queries & Aggregations",
-      note: "Covers SQL queries, filtering conditions, joins, grouping, and aggregations.",
-    },
-    {
-      title: "Java (Basic)",
-      issuer: "HackerRank",
-      year: "2026",
-      url: "https://www.hackerrank.com/skills-verification",
-      tier: "major",
-      covers: "Java Fundamentals & OOP",
-      note: "Covers core language syntax, object-oriented concepts, and control flow in Java.",
-    },
-  ] as Certification[],
+  certifications: [] as Certification[],
 
   /* ───────────────────────────  WORK  ─────────────────────────── */
   /** Ordered strongest-first. The landing scroller shows the first five;
@@ -232,98 +194,34 @@ export const config = {
   projects: [
     {
       id: 1,
-      title: "CampusMart",
-      category: "Campus Marketplace / Full-Stack Development",
-      technologies: "Mobile Development, Architecture",
+      title: "TicketPilot",
+      category: "Automation / Scheduling Service",
+      technologies: "Python, Scheduling, Windows Startup, Automation",
       description:
-        "A campus-focused marketplace designed to help students discover and exchange products within their college community.",
-      link: "https://github.com/harshittDEV/CampusMart",
-      accent: "web",
+        "A journey-reminder and scheduling service designed to help users prepare for time-sensitive train-ticket booking windows with IST-based scheduling, alerts, and missed-reminder recovery.",
+      link: "https://github.com/Saransh-06/TicketPilot",
+      accent: "systems",
       metric: {
-        value: "In Dev",
-        label: "Campus marketplace",
+        value: "Service",
+        label: "Scheduling & reminders",
         caveat:
-          "In development; describes architectural intent without claiming unimplemented features.",
+          "Assists with journey reminders and booking window notifications. Does not automate ticket booking, bypass CAPTCHAs, or process payments.",
       },
     },
     {
       id: 2,
-      title: "ScopeLock AI",
-      category: "AI Workflows / Task Execution",
-      technologies: "AI Workflows, Task Execution",
+      title: "Marupaḍe",
+      category: "Campus Lost & Found Platform",
+      technologies: "React, TypeScript, Web Development, Team Project",
       description:
-        "A project focused on AI-assisted workflows and task execution.",
-      link: "https://github.com/harshittDEV/ScopeLock-AI",
-      accent: "ml",
-      metric: {
-        value: "Completed",
-        label: "Workflow execution",
-        caveat:
-          "Repository project; claims no unverified external benchmarks or proprietary models.",
-      },
-    },
-    {
-      id: 3,
-      title: "TicketPilot",
-      category: "Automation / Backend",
-      technologies: "Python, FastAPI, Agent Workflows",
-      description:
-        "A railway booking automation project with a FastAPI backend and agent execution workflow.",
-      link: "https://github.com/harshittDEV/TicketPilot",
-      accent: "systems",
-      metric: {
-        value: "In Dev",
-        label: "FastAPI agent workflow",
-        caveat:
-          "In active development. Does not claim live booking integration or production deployment.",
-      },
-    },
-    {
-      id: 4,
-      title: "OrgCore",
-      category: "Database / Management",
-      technologies: "SQL, Database Design, Schema Architecture",
-      description:
-        "An employee management and database system structured around normalized schema design and relational records.",
-      link: "https://github.com/harshittDEV/OrgCore-EmployeeManagementDatabase",
-      accent: "systems",
-      metric: {
-        value: "Database",
-        label: "Relational records management",
-        caveat:
-          "Focuses on schema design and records management without fabricated performance metrics.",
-      },
-    },
-    {
-      id: 5,
-      title: "Lost and Found Portal",
-      category: "Web Application",
-      technologies: "JavaScript, Web Development, Database",
-      description:
-        "A dedicated community portal designed to report, track, and recover lost and found belongings with structured item logging.",
-      link: "https://github.com/harshittDEV/lost_and_found_portal",
+        "A team-built campus lost-and-found platform that helps people report, discover, and reconnect with lost belongings through structured item logging.",
+      link: "https://lost-and-found-portal-nu.vercel.app/",
       accent: "web",
       metric: {
-        value: "Portal",
-        label: "Item recovery workflow",
+        value: "Platform",
+        label: "Campus item recovery",
         caveat:
-          "Functional community utility application for structured item logging.",
-      },
-    },
-    {
-      id: 6,
-      title: "Flutter Credit Card UI",
-      category: "Mobile UI",
-      technologies: "Flutter, Dart, Mobile UI",
-      description:
-        "An interactive mobile card interface focusing on clean visual hierarchy, reactive component structure, and smooth state transitions.",
-      link: "https://github.com/harshittDEV/flutter-credit-card-ui",
-      accent: "practice",
-      metric: {
-        value: "Mobile UI",
-        label: "Component design in Flutter",
-        caveat:
-          "UI-focused project; does not claim backend payment processing or financial integrations.",
+          "Team-built campus platform for reporting and reconnecting with lost belongings.",
       },
     },
   ] as Project[],
@@ -331,36 +229,36 @@ export const config = {
   /* ─────────────────────────  CONTACT  ───────────────────────── */
 
   contact: {
-    email: "harshitsinghh1128@gmail.com",
+    email: "ssa.260506@gmail.com",
     /** `rail: true` puts it in the fixed left-hand icon strip. */
     socials: [
       {
         icon: "github",
         label: "GitHub",
-        handle: "harshittDEV",
-        url: "https://github.com/harshittDEV",
+        handle: "Saransh-06",
+        url: "https://github.com/Saransh-06",
         rail: true,
       },
       {
         icon: "linkedin",
         label: "LinkedIn",
-        handle: "harshit-singh",
-        url: "https://www.linkedin.com/in/harshit-singh-882b46309/",
+        handle: "saransh-singh",
+        url: "https://www.linkedin.com/in/saransh-singh-a229b7381/",
         rail: true,
       },
       {
         icon: "leetcode",
         label: "LeetCode",
-        handle: "aHu59DzfYF",
-        url: "https://leetcode.com/u/aHu59DzfYF/",
-        rail: false,
+        handle: "SARANSH-26",
+        url: "https://leetcode.com/u/SARANSH-26/",
+        rail: true,
       },
     ],
-    githubAlt: "https://github.com/harshittDEV",
+    githubAlt: "https://github.com/Saransh-06",
     availability: {
-      status: "Open to opportunities",
+      status: "Open to connecting",
       detail:
-        "Open to internships, freelance opportunities, and collaborations.",
+        "Open to software engineering internships, collaborative projects, and technical discussions.",
     },
   },
 
@@ -369,39 +267,39 @@ export const config = {
 
   skills: {
     engineering: {
-      title: "BACKEND & DATABASES",
-      description: "APIs, schema design, and architectures",
+      title: "SOFTWARE & ALGORITHMS",
+      description: "Data structures, problem solving, and backend logic",
       details:
-        "Building reliable services and structured data models. Focused on relational database design, query optimization, clean API development, and secure authentication flows.",
+        "Focusing on computer science fundamentals, algorithmic problem solving, and structured software development. Experienced with Data Structures and Algorithms, Object-Oriented Programming, and core programming languages.",
       tools: [
         "Java",
+        "C++",
+        "Python",
         "SQL",
-        "MySQL",
-        "PostgreSQL",
-        "SQLite",
-        "TypeScript",
-        "API Development",
-        "Database Design",
-        "Authentication",
-        "Application Security",
-        "Data Structures & Algorithms",
+        "Data Structures",
+        "Algorithms",
+        "OOP",
+        "Git",
+        "GitHub",
+        "Problem Solving",
       ],
     },
     shipping: {
-      title: "FRONTEND & MOBILE",
-      description: "Cross-platform mobile applications and interfaces",
+      title: "FRONTEND & TOOLS",
+      description: "Responsive web interfaces and developer workflows",
       details:
-        "Developing responsive mobile applications and intuitive user interfaces. Focused on component architecture, state management, and reliable cross-platform execution.",
+        "Developing responsive web applications and interfaces. Focused on modern web technologies, component-based architectures, and practical developer tools.",
       tools: [
-        "Flutter",
-        "Dart",
-        "React Native",
-        "Swift",
         "HTML",
         "CSS",
         "JavaScript",
-        "Mobile Development",
-        "Open-Source Contributions",
+        "TypeScript",
+        "React",
+        "Next.js",
+        "Tailwind CSS",
+        "Visual Studio Code",
+        "Postman",
+        "Full-Stack Development",
       ],
     },
   },
@@ -415,53 +313,53 @@ export const config = {
   techStack: [
     [
       { name: "Java", slug: "java/java-original" },
-      { name: "JavaScript", slug: "javascript/javascript-original" },
+      { name: "C++", slug: "cplusplus/cplusplus-original" },
+      { name: "Python", slug: "python/python-original" },
       { name: "TypeScript", slug: "typescript/typescript-original" },
-      { name: "Dart", slug: "dart/dart-original" },
-      { name: "SQL" },
+      { name: "JavaScript", slug: "javascript/javascript-original" },
       { name: "HTML", slug: "html5/html5-original" },
       { name: "CSS", slug: "css3/css3-original" },
-      { name: "Flutter", slug: "flutter/flutter-original" },
-      { name: "React Native", slug: "react/react-original" },
-      { name: "Swift", slug: "swift/swift-original" },
+      { name: "React", slug: "react/react-original" },
+      { name: "Next.js", slug: "nextjs/nextjs-original" },
+      { name: "Tailwind CSS", slug: "tailwindcss/tailwindcss-original" },
       { name: "Git", slug: "git/git-original" },
       { name: "GitHub", slug: "github/github-original" },
     ],
     [
-      { name: "MySQL", slug: "mysql/mysql-original" },
-      { name: "PostgreSQL", slug: "postgresql/postgresql-original" },
-      { name: "SQLite", slug: "sqlite/sqlite-original" },
-      { name: "Relational Databases" },
-      { name: "Database Design" },
-      { name: "API Development" },
-      { name: "REST APIs" },
-      { name: "Mobile Development" },
-      { name: "Backend Engineering" },
-      { name: "Open Source" },
-    ],
-    [
+      { name: "Visual Studio Code", slug: "vscode/vscode-original" },
+      { name: "Postman", slug: "postman/postman-original" },
+      { name: "SQL" },
       { name: "Data Structures" },
       { name: "Algorithms" },
-      { name: "Authentication" },
-      { name: "Application Security" },
-      { name: "Schema Architecture" },
-      { name: "Mobile Architecture" },
-      { name: "System Design" },
-      { name: "Open-Source Contributions" },
-    ],
-    [
-      { name: "LeetCode" },
+      { name: "Object-Oriented Programming" },
+      { name: "Full-Stack Development" },
+      { name: "Frontend Development" },
+      { name: "Software Engineering" },
       { name: "Problem Solving" },
-      { name: "Backend Systems" },
-      { name: "Mobile Applications" },
-      { name: "Relational Models" },
-      { name: "API Architecture" },
     ],
     [
-      { name: "Algorithms & DSA" },
-      { name: "Secure Systems" },
-      { name: "Database Systems" },
-      { name: "Application Engineering" },
+      { name: "Data Structures & Algorithms" },
+      { name: "OOP Principles" },
+      { name: "Web Development" },
+      { name: "Code Optimization" },
+      { name: "System Design Basics" },
+      { name: "Clean Code" },
+      { name: "Team Collaboration" },
+      { name: "Version Control" },
+    ],
+    [
+      { name: "Software Development" },
+      { name: "Full-Stack Engineering" },
+      { name: "Algorithm Design" },
+      { name: "Technical Problem Solving" },
+      { name: "AI/ML Exploration" },
+      { name: "Practical Applications" },
+    ],
+    [
+      { name: "Computer Science" },
+      { name: "Engineering Foundations" },
+      { name: "DSA & Problem Solving" },
+      { name: "Applied Development" },
     ],
     [
       { name: "Computer Science" },
@@ -503,6 +401,6 @@ export const config = {
     licenseUrl: "https://www.gnu.org/licenses/gpl-3.0.html",
     searchDepth: 12,
     chatGreeting:
-      "Hi — I'm an AI assistant answering questions about Harshit's work. Ask me about TicketPilot, CampusMart, OrgCore, or anything on this site.",
+      "Hi — I'm an AI assistant answering questions about Saransh's work. Ask me about TicketPilot, Marupaḍe, or anything on this site.",
   },
 };

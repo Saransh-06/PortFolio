@@ -6,6 +6,7 @@ import {
   FaLinkedinIn,
   FaReddit,
 } from "react-icons/fa6";
+import { SiLeetcode } from "react-icons/si";
 import "./styles/SocialIcons.css";
 import { TbNotes } from "react-icons/tb";
 import { useEffect } from "react";
@@ -17,6 +18,7 @@ import { config } from "../config";
 export const socialIcons: Record<string, IconType> = {
   github: FaGithub,
   linkedin: FaLinkedinIn,
+  leetcode: SiLeetcode,
   instagram: FaInstagram,
   reddit: FaReddit,
   discord: FaDiscord,
